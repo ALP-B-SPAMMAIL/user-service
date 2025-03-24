@@ -1,12 +1,5 @@
 # 우분투 기반의 이미지 사용
-FROM ubuntu:20.04 AS build
-
-# 필요한 패키지 설치 (curl, openjdk, gradle 등)
-RUN apt-get update && \
-    apt-get install -y curl unzip openjdk-17-jdk
-
-# Gradle 설치
-RUN curl -s https://get.gradle.org | bash
+FROM --platform=linux/amd64 gradle:8.13.0-jdk17 AS build
 
 WORKDIR /app
 
