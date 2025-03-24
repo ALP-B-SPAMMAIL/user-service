@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: member-service  # 컨테이너 이름
-          image: myregistry.azurecr.io/member-service:latest  # 사용할 컨테이너 이미지 (ACR에서 가져옴)
+          image: team04registry.azurecr.io/member-service:latest  # 사용할 컨테이너 이미지 (ACR에서 가져옴)
           ports:
             - containerPort: 8080
           envFrom:   # 여기는 환경 변수 설정 -> 나중에 수정하기 
