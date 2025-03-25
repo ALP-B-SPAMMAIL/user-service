@@ -29,9 +29,7 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.1.0'
-
-	// PostgreSQL 의존성 추가
-    runtimeOnly 'org.postgresql:postgresql'
+	
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
