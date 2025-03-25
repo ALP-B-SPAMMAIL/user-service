@@ -32,7 +32,7 @@ jobs:
         run: |
           docker build -t team04registry.azurecr.io/member-service:${{ github.sha }} .
           docker push team04registry.azurecr.io/member-service:${{ github.sha }}
-          docker tag team04registry.azurecr.io/member-service:${{ github.sha }} team04registry.azurecr.io/spam-service:latest
+          docker tag team04registry.azurecr.io/member-service:${{ github.sha }} team04registry.azurecr.io/member-service:latest
           docker push team04registry.azurecr.io/member-service:latest
 
   # 2. Azure AKS에 배포
