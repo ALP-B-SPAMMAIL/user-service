@@ -5,13 +5,13 @@ import com.example.user.model.User;
 import lombok.Getter;
 
 @Getter
-public class UserRegistedEventDto extends AbstractDto{
+public class UserRegisteredEventDto extends AbstractDto{
     private int userId;
 
-    public UserRegistedEventDto() {
+    public UserRegisteredEventDto() {
     }
 
-    public UserRegistedEventDto(User user) {
+    public UserRegisteredEventDto(User user) {
         this.userId = user.getId();
     }
 }

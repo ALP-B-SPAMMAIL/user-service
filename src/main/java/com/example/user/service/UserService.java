@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.user.dto.UserRegisterDto;
 import com.example.user.dto.UserResignDto;
-import com.example.user.event.UserRegistedEvent;
+import com.example.user.event.UserRegisteredEvent;
 import com.example.user.event.UserResignedEvent;
-import com.example.user.eventDto.UserRegistedEventDto;
+import com.example.user.eventDto.UserRegisteredEventDto;
 import com.example.user.eventDto.UserResignedEventDto;
 import com.example.user.kafka.KafkaProducer;
 import com.example.user.model.User;
@@ -37,7 +37,7 @@ public class UserService {
                 .build();
 
             userRepository.save(user);
-            kafkaProducer.publish(new UserRegistedEvent(new UserRegistedEventDto(user)));
+            kafkaProducer.publish(new UserRegisteredEvent(new UserRegisteredEventDto(user)));
             return user.getId();
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
