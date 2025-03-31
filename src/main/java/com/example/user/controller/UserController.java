@@ -20,8 +20,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<Integer> register(@RequestBody UserRegisterDto userRegisterDto) {
-        return ResponseEntity.ok(userService.register(userRegisterDto));
+    public int register(@RequestBody UserRegisterDto userRegisterDto) {
+        return userService.register(userRegisterDto);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -5,8 +5,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.user.dto.UserRegisterDto;
 import com.example.user.dto.UserResignDto;
+import com.example.user.event.UserRegistedEvent;
+import com.example.user.event.UserResignedEvent;
+import com.example.user.eventDto.UserRegistedEventDto;
+import com.example.user.eventDto.UserResignedEventDto;
+import com.example.user.kafka.KafkaProducer;
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.transaction.Transactional;
 
@@ -15,31 +21,48 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
     @Transactional
     public int register(UserRegisterDto userRegisterDto) {
-        User user = User.builder()
-            .name(userRegisterDto.getName())
-            .job(userRegisterDto.getJob())
-            .gender(userRegisterDto.getGender())
-            .birthDate(userRegisterDto.getBirthDate())
-            .password(userRegisterDto.getPassword())
-            .interest(userRegisterDto.getInterest())
-            .build();
+        try {
+            User user = User.builder()
+                .name(userRegisterDto.getName())
+                .job(userRegisterDto.getJob())
+                .gender(userRegisterDto.getGender())
+                .birthDate(userRegisterDto.getBirthDate())
+                .password(userRegisterDto.getPassword())
+                .interest(userRegisterDto.getInterest())
+                .build();
 
-        userRepository.save(user);
-        return user.getId();
+            userRepository.save(user);
+            kafkaProducer.publish(new UserRegistedEvent(new UserRegistedEventDto(user)));
+            return user.getId();
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     @Transactional
     public boolean delete(int userId, UserResignDto userResignDto) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        try {
+            User user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                return false;
+            }
+            if (!user.getPassword().equals(userResignDto.getPassword())) {
+                return false;
+            }
+            userRepository.deleteById(userId);
+            kafkaProducer.publish(new UserResignedEvent(new UserResignedEventDto(user)));
+            return true;
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return false;
         }
-        if (!user.getPassword().equals(userResignDto.getPassword())) {
-            return false;
-        }
-        userRepository.deleteById(userId);
-        return true;
     }
 }
