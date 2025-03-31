@@ -6,13 +6,17 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: member-service.kt.com  # 이 도메인으로 들어오는 요청 처리 -> 나중에 변경하기
+    - host: whowhomail.kro.kr
       http:
         paths:
-          - path: /
+          - path: /member/*
             pathType: Prefix
             backend:
               service:
-                name: member-service  # 연결할 Kubernetes Service 이름
+                name: member-service
                 port:
-                  number: 80  # Service가 노출하는 포트 (member-service의 Service.yaml에서 설정한 포트)
+                  number: 80
+  tls:
+    - hosts: 
+      - whowhomail.kro.kr
+      secretName: tls-secret
