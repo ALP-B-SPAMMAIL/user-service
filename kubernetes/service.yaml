@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: member-service
+  name: user-service
   namespace: user-namespace
 spec:
   selector:
-    app: member-service  # 이 파드랑 연결 
+    app: user-service  # 이 파드랑 연결 
   ports:
     - protocol: TCP 
       port: 80  # 외부 포트 

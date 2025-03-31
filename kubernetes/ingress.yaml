@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1   # 프런트 cdn으로 배포하면 필요하니까 구성해둠
 kind: Ingress  # ingress controller 설치 필요 
 metadata:
-  name: member-service-ingress
+  name: user-service-ingress
   namespace: user-namespace
 spec:
   ingressClassName: nginx
@@ -9,11 +9,11 @@ spec:
     - host: whowhomail.kro.kr
       http:
         paths:
-          - path: /member/*
+          - path: /user/*
             pathType: Prefix
             backend:
               service:
-                name: member-service
+                name: user-service
                 port:
                   number: 80
   tls:

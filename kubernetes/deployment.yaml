@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: member-service   # deployment 이름 
+  name: user-service   # deployment 이름 
   namespace: user-namespace
   labels:
-    app: member-service  # Deployment에 app=member-service 라벨 추가 (서비스와 매칭될 때 사용)
+    app: user-service  # Deployment에 app=member-service 라벨 추가 (서비스와 매칭될 때 사용)
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: member-service  # 이 Deployment가 관리할 Pod들의 라벨 지정 (Pod template의 labels와 일치해야 함)
+      app: user-service  # 이 Deployment가 관리할 Pod들의 라벨 지정 (Pod template의 labels와 일치해야 함)
   template:
     metadata:
       labels:
-        app: member-service  # 생성될 Pod에 app=member-service 라벨 추가 (Service가 이 라벨을 보고 연결)
+        app: user-service  # 생성될 Pod에 app=member-service 라벨 추가 (Service가 이 라벨을 보고 연결)
     spec:
       containers:
-        - name: member-service  # 컨테이너 이름
-          image: team04registry.azurecr.io/member-service:latest  # 사용할 컨테이너 이미지 (ACR에서 가져옴)
+        - name: user-service  # 컨테이너 이름
+          image: team04registry.azurecr.io/user-service:latest  # 사용할 컨테이너 이미지 (ACR에서 가져옴)
           ports:
             - containerPort: 8080
       # imagePullSecrets:
