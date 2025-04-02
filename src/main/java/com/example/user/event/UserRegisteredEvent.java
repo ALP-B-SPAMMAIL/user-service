@@ -14,7 +14,6 @@ public class UserRegisteredEvent extends AbstractEvent{
 
     public UserRegisteredEvent(UserRegisteredEventDto payload) {
         super(payload);
-        this.topic = "user";
         this.payload = payload;
     }
 }
