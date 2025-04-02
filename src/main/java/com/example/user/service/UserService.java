@@ -46,23 +46,23 @@ public class UserService {
     //     }
     // }
 
-    // @Transactional
-    // public boolean delete(int userId, UserResignDto userResignDto) {
-    //     try {
-    //         User user = userRepository.findById(userId).orElse(null);
-    //         if (user == null) {
-    //             return false;
-    //         }
-    //         if (!user.getPassword().equals(userResignDto.getPassword())) {
-    //             return false;
-    //         }
-    //         userRepository.deleteById(userId);
-    //         kafkaProducer.publish(new UserResignedEvent(new UserResignedEventDto(user)));
-    //         return true;
-    //     } catch (JsonProcessingException e) {
-    //         // TODO Auto-generated catch block
-    //         e.printStackTrace();
-    //         return false;
-    //     }
-    // }
+    @Transactional
+    public boolean delete(int userId, UserResignDto userResignDto) {
+        try {
+            User user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                return false;
+            }
+            if (!user.getPassword().equals(userResignDto.getPassword())) {
+                return false;
+            }
+            userRepository.deleteById(userId);
+            kafkaProducer.publish(new UserResignedEvent(new UserResignedEventDto(user)));
+            return true;
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
