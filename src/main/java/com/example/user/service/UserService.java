@@ -24,45 +24,45 @@ public class UserService {
     @Autowired
     private KafkaProducer kafkaProducer;
 
-    @Transactional
-    public int register(UserRegisterDto userRegisterDto) {
-        try {
-            User user = User.builder()
-                .name(userRegisterDto.getName())
-                .job(userRegisterDto.getJob())
-                .gender(userRegisterDto.getGender())
-                .birthDate(userRegisterDto.getBirthDate())
-                .password(userRegisterDto.getPassword())
-                .interest(userRegisterDto.getInterest())
-                .build();
+    // @Transactional
+    // public int register(UserRegisterDto userRegisterDto) {
+    //     try {
+    //         User user = User.builder()
+    //             .name(userRegisterDto.getName())
+    //             .job(userRegisterDto.getJob())
+    //             .gender(userRegisterDto.getGender())
+    //             .birthDate(userRegisterDto.getBirthDate())
+    //             .password(userRegisterDto.getPassword())
+    //             .interest(userRegisterDto.getInterest())
+    //             .build();
 
-            userRepository.save(user);
-            kafkaProducer.publish(new UserRegisteredEvent(new UserRegisteredEventDto(user)));
-            return user.getId();
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return -1;
-        }
-    }
+    //         userRepository.save(user);
+    //         kafkaProducer.publish(new UserRegisteredEvent(new UserRegisteredEventDto(user)));
+    //         return user.getId();
+    //     } catch (JsonProcessingException e) {
+    //         // TODO Auto-generated catch block
+    //         e.printStackTrace();
+    //         return -1;
+    //     }
+    // }
 
-    @Transactional
-    public boolean delete(int userId, UserResignDto userResignDto) {
-        try {
-            User user = userRepository.findById(userId).orElse(null);
-            if (user == null) {
-                return false;
-            }
-            if (!user.getPassword().equals(userResignDto.getPassword())) {
-                return false;
-            }
-            userRepository.deleteById(userId);
-            kafkaProducer.publish(new UserResignedEvent(new UserResignedEventDto(user)));
-            return true;
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return false;
-        }
-    }
+    // @Transactional
+    // public boolean delete(int userId, UserResignDto userResignDto) {
+    //     try {
+    //         User user = userRepository.findById(userId).orElse(null);
+    //         if (user == null) {
+    //             return false;
+    //         }
+    //         if (!user.getPassword().equals(userResignDto.getPassword())) {
+    //             return false;
+    //         }
+    //         userRepository.deleteById(userId);
+    //         kafkaProducer.publish(new UserResignedEvent(new UserResignedEventDto(user)));
+    //         return true;
+    //     } catch (JsonProcessingException e) {
+    //         // TODO Auto-generated catch block
+    //         e.printStackTrace();
+    //         return false;
+    //     }
+    // }
 }

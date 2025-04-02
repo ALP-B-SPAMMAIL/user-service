@@ -4,25 +4,58 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "user")
 @Getter
+@Setter
+@NoArgsConstructor
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    public int id;
+    public String userFigureId;
+    public String name;
+    public String job;
+    public String gender;
+    public String birthDate;
+    public String password;
+    public String interest;
 
-    private String name;
-    private String job;
-    private String gender;
-    private String birthDate;
-    private String password;
-    private String interest;
+    public String getPassword() {
+        return this.password;
+    }
+    public String getName() {
+        return this.name;
+    }
+    public String getUserFigureId() {
+        return this.userFigureId;
+    }
+
+    public void setPassword(String password) {
+        this.password=password;
+    }
+    public void setName(String name) {
+        this.name=name;
+    }
+    public void setJob(String job) {
+        this.job=job;
+    }
+    public void setInterest(String interest) {
+        this.interest=interest;
+    }
+    public void setGender(String gender) {
+        this.gender=gender;
+    }
+    public void setBirthDate(String birth) {
+        this.birthDate=birth;
+    }
+    public void setUserFigureId(String userFigureId) {
+        this.userFigureId=userFigureId;
+    }
 }
